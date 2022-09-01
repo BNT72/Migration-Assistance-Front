@@ -33,7 +33,7 @@ class BoardModerator extends Component {
 
     findDialog(){
         // do whatever you like here
-        this.props.getDialog(this.props.dialog[0].username);
+        // this.props.getDialog(this.props.dialogs[0].user.username);
         setTimeout(this.findDialog, 5000);
     }
     
@@ -48,15 +48,14 @@ class BoardModerator extends Component {
         };
         mess.username = this.props.user.username
         mess.message = this.state.value
-        this.props.setMessage(this.props.dialog[0].username, mess);
+        this.props.setMessage(this.state.currentDialogName, mess);
         this.setState({value: ''});
 
 
     }
     getMessages(dialog) {
-        this.props.getDialog(dialog.username).then(this.findDialog);
-
-        // this.setState({currentDialog:dialog.messages,currentDialogName:dialog.username})
+        this.props.getDialog(dialog.user.username).then(this.findDialog);
+        this.setState({currentDialog:dialog.messages,currentDialogName:dialog.user.username})
        // this.props.dialog=messages
     }
     componentDidMount() {
@@ -119,12 +118,14 @@ class BoardModerator extends Component {
                                                         <ul className="list-unstyled mb-0">
 
                                                             {this.props.dialogs.map(dialog =>
+
+
                                                                 <li key={dialog.id} className="p-2 border-bottom">
                                                                     <span  onClick={() => this.getMessages(dialog)}
                                                                        className="d-flex justify-content-between">
                                                                         <div className="d-flex flex-row">
                                                                             <div className="pt-1">
-                                                                                <p className="fw-bold mb-0">   {dialog.username}</p>
+                                                                                <p className="fw-bold mb-0">   {dialog.user.username}</p>
                                                                                 <p className="small text-muted">{dialog.messages[dialog.messages.length-1].message}</p>
                                                                             </div>
                                                                         </div>

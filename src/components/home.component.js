@@ -2,9 +2,6 @@ import React, {Component} from "react";
 
 import UserService from "../redux/services/user.service";
 import MapContainer from "./map/MapContainer";
-import store from "../store";
-import {getTest} from "../redux/actions/test";
-import Test from "./test/Test";
 
 export default class Home extends Component {
     constructor(props) {

@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Start = ({ onQuizStart,tp }) => {
-    console.log(tp)
     return(
         <div className="card">
             <div className="card-content">

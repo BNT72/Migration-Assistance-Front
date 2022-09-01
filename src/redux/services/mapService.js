@@ -1,13 +1,12 @@
 import axios from "axios";
-import authHeader from "./auth-header";
-import {getMarker} from "../actions/map";
 
-const API_URL = "http://localhost:8080/api/map/";
+
+const API_URL = "http://localhost:8080/map/";
 
 class MapService {
 
     getMarkers(testType) {
-        return axios.post(API_URL,testType);
+        return axios.post(API_URL,{markerType: testType});
     }
 
 }

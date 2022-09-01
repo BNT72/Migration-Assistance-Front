@@ -38,10 +38,10 @@ const vusername = (value) => {
 };
 
 const vpassword = (value) => {
-  if (value.length < 6 || value.length > 40) {
+  if (value.length < 1 || value.length > 40) {
     return (
       <div className="alert alert-danger" role="alert">
-        The password must be between 6 and 40 characters.
+        The password must be between 1 and 40 characters.
       </div>
     );
   }
@@ -57,7 +57,6 @@ class Register extends Component {
 
     this.state = {
       username: "",
-      email: "",
       password: "",
       successful: false,
     };
@@ -137,18 +136,6 @@ class Register extends Component {
                     value={this.state.username}
                     onChange={this.onChangeUsername}
                     validations={[required, vusername]}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.onChangeEmail}
-                    validations={[required, email]}
                   />
                 </div>
 
