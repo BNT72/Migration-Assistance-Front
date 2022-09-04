@@ -11,15 +11,13 @@ import AuthService from "../services/auth.service";
 
 export const register = (username, password) => (dispatch) => {
   return AuthService.register(username, password).then(
-    (response) => {
+    (data) => {
       dispatch({
         type: REGISTER_SUCCESS,
+        payload: { user: data }
       });
 
-      dispatch({
-        type: SET_MESSAGE,
-        payload: response.data.message,
-      });
+
 
       return Promise.resolve();
     },

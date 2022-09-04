@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import { isEmail } from "validator";
 
 import { connect } from "react-redux";
 import { register } from "../redux/actions/auth";
+import {Redirect} from "react-router-dom";
 
 const required = (value) => {
   if (!value) {
@@ -17,15 +17,6 @@ const required = (value) => {
   }
 };
 
-const email = (value) => {
-  if (!isEmail(value)) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        This is not a valid email.
-      </div>
-    );
-  }
-};
 
 const vusername = (value) => {
   if (value.length < 3 || value.length > 20) {
@@ -84,31 +75,34 @@ class Register extends Component {
     e.preventDefault();
 
     this.setState({
-      successful: false,
+      loading: true,
     });
 
     this.form.validateAll();
+    const { dispatch, history } = this.props;
+    console.log("AaAAAAAwqeqwe1")
+    console.log(this.state.username+"  "+ this.state.password)
+      dispatch(register(this.state.username, this.state.password))
+          .then(() => {
 
-    if (this.checkBtn.context._errors.length === 0) {
-      this.props
-        .dispatch(
-          register(this.state.username, this.state.email, this.state.password)
-        )
-        .then(() => {
-          this.setState({
-            successful: true,
+            history.push("/profile");
+            window.location.reload();
+          })
+          .catch(() => {
+
+            this.setState({
+              loading: false
+            });
           });
-        })
-        .catch(() => {
-          this.setState({
-            successful: false,
-          });
-        });
-    }
+
   }
 
   render() {
-    const { message } = this.props;
+    const {  isLoggedIn,message } = this.props;
+
+    if (isLoggedIn) {
+      return <Redirect to="/profile" />;
+    }
 
     return (
       <div className="col-md-12">
@@ -178,8 +172,10 @@ class Register extends Component {
 }
 
 function mapStateToProps(state) {
+  const { isLoggedIn } = state.auth;
   const { message } = state.message;
   return {
+    isLoggedIn,
     message,
   };
 }
